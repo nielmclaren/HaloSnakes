@@ -12,11 +12,11 @@ public class HaloPandemic {
   private void setupInfections(int numInfections) {
     infections = new ArrayList<HaloInfection>();
     for (int i = 0; i < numInfections; i++) {
-      HaloAgent agent = grid.get(
+      HaloCell cell = grid.get(
           floor(random(grid.width())),
           floor(random(grid.height())));
 
-      infections.add(new HaloInfection(agent));
+      infections.add(new HaloInfection(cell));
     }
   }
 

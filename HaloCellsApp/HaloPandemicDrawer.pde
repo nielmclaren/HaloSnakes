@@ -12,8 +12,8 @@ public class HaloPandemicDrawer {
     ArrayList<HaloInfection> infections = pandemic.infections();
     for (int i = 0; i < infections.size(); i++) {
       HaloInfection infection = infections.get(i);
-      HaloAgent agent = infection.agent();
-      drawHalo(g, agent.x(), agent.y());
+      HaloCell cell = infection.cell();
+      drawHalo(g, cell.x(), cell.y());
     }
   }
 

@@ -3,18 +3,18 @@ public class HaloGrid {
   private int width;
   private int height;
 
-  private HaloAgent[][] grid;
+  private HaloCell[][] grid;
 
   HaloGrid(int w, int h) {
     width = w;
     height = h;
-    grid = new HaloAgent[width][height];
+    grid = new HaloCell[width][height];
 
-    createHaloAgents();
-    setHaloAgentNeighbors();
+    createHaloCells();
+    setHaloCellNeighbors();
   }
 
-  public HaloAgent get(int x, int y) {
+  public HaloCell get(int x, int y) {
     return grid[x][y];
   }
 
@@ -26,24 +26,24 @@ public class HaloGrid {
     return height;
   }
 
-  private void createHaloAgents() {
+  private void createHaloCells() {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        grid[x][y] = new HaloAgent(x, y);
+        grid[x][y] = new HaloCell(x, y);
       }
     }
   }
 
-  private void setHaloAgentNeighbors() {
+  private void setHaloCellNeighbors() {
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        HaloAgent agent = grid[x][y];
-        setHaloAgentNeighbors(x, y);
+        HaloCell cell = grid[x][y];
+        setHaloCellNeighbors(x, y);
       }
     }
   }
 
-  private void setHaloAgentNeighbors(int x, int y) {
+  private void setHaloCellNeighbors(int x, int y) {
     int minX = max(x - 1, 0);
     int maxX = min(x + 2, width);
     int minY = max(y - 1, 0);
@@ -55,43 +55,43 @@ public class HaloGrid {
           continue;
         }
 
-        setHaloAgentNeighbors(x, y, neighborX, neighborY);
+        setHaloCellNeighbors(x, y, neighborX, neighborY);
       }
     }
   }
 
-  private void setHaloAgentNeighbors(int x, int y, int neighborX, int neighborY) {
-    HaloAgent agent = grid[x][y];
-    HaloAgent neighbor = grid[neighborX][neighborY];
+  private void setHaloCellNeighbors(int x, int y, int neighborX, int neighborY) {
+    HaloCell cell = grid[x][y];
+    HaloCell neighbor = grid[neighborX][neighborY];
 
     if (neighborX < x) {
       if (neighborY < y) {
-        agent.nwNeighbor(neighbor);
+        cell.nwNeighbor(neighbor);
       }
       else if (neighborY == y) {
-        agent.wNeighbor(neighbor);
+        cell.wNeighbor(neighbor);
       }
       else {
-        agent.swNeighbor(neighbor);
+        cell.swNeighbor(neighbor);
       }
     }
     else if (neighborX == x) {
       if (neighborY < y) {
-        agent.nNeighbor(neighbor);
+        cell.nNeighbor(neighbor);
       }
       else {
-        agent.sNeighbor(neighbor);
+        cell.sNeighbor(neighbor);
       }
     }
     else {
       if (neighborY < y) {
-        agent.neNeighbor(neighbor);
+        cell.neNeighbor(neighbor);
       }
       else if (neighborY == y) {
-        agent.eNeighbor(neighbor);
+        cell.eNeighbor(neighbor);
       }
       else {
-        agent.seNeighbor(neighbor);
+        cell.seNeighbor(neighbor);
       }
     }
   }
