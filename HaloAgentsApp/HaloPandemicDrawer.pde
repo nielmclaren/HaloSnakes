@@ -9,9 +9,12 @@ public class HaloPandemicDrawer {
   }
 
   public void draw(PGraphics g) {
-    HaloInfection infection = pandemic.infection();
-    HaloAgent agent = infection.agent();
-    drawHalo(g, agent.x(), agent.y());
+    ArrayList<HaloInfection> infections = pandemic.infections();
+    for (int i = 0; i < infections.size(); i++) {
+      HaloInfection infection = infections.get(i);
+      HaloAgent agent = infection.agent();
+      drawHalo(g, agent.x(), agent.y());
+    }
   }
 
   private void drawHalo(PGraphics g, int x, int y) {
