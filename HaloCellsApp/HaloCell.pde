@@ -97,4 +97,33 @@ public class HaloCell {
     nwNeighbor = v;
     return this;
   }
+
+  public ArrayList<HaloCell> getNeighbors() {
+    ArrayList<HaloCell> neighbors = new ArrayList<HaloCell>();
+    if (nNeighbor != null) {
+      neighbors.add(nNeighbor);
+    }
+    if (neNeighbor != null) {
+      neighbors.add(neNeighbor);
+    }
+    if (eNeighbor != null) {
+      neighbors.add(eNeighbor);
+    }
+    if (seNeighbor != null) {
+      neighbors.add(seNeighbor);
+    }
+    if (sNeighbor != null) {
+      neighbors.add(sNeighbor);
+    }
+    if (swNeighbor != null) {
+      neighbors.add(swNeighbor);
+    }
+    if (wNeighbor != null) {
+      neighbors.add(wNeighbor);
+    }
+    if (nwNeighbor != null) {
+      neighbors.add(nwNeighbor);
+    }
+    return neighbors;
+  }
 }

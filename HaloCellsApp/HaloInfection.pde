@@ -10,41 +10,32 @@ public class HaloInfection {
     return cell;
   }
 
-  public HaloInfection step() {
-    cell = getNextCell(cell);
-    return this;
-  }
-
-  private HaloCell getNextCell(HaloCell cell) {
-    HaloCell nextCell = null;
-    while (nextCell == null) {
-      switch (floor(random(8))) {
-        case 0:
-          nextCell = cell.nNeighbor();
-          break;
-        case 1:
-          nextCell = cell.neNeighbor();
-          break;
-        case 2:
-          nextCell = cell.eNeighbor();
-          break;
-        case 3:
-          nextCell = cell.seNeighbor();
-          break;
-        case 4:
-          nextCell = cell.sNeighbor();
-          break;
-        case 5:
-          nextCell = cell.swNeighbor();
-          break;
-        case 6:
-          nextCell = cell.wNeighbor();
-          break;
-        case 7:
-          nextCell = cell.nwNeighbor();
-          break;
-      }
+  private ArrayList<HaloCell> getNeighbors() {
+    ArrayList<HaloCell> neighbors = new ArrayList<HaloCell>();
+    if (cell.nNeighbor() != null) {
+      neighbors.add(cell.nNeighbor());
     }
-    return nextCell;
+    if (cell.neNeighbor() != null) {
+      neighbors.add(cell.neNeighbor());
+    }
+    if (cell.eNeighbor() != null) {
+      neighbors.add(cell.eNeighbor());
+    }
+    if (cell.seNeighbor() != null) {
+      neighbors.add(cell.seNeighbor());
+    }
+    if (cell.sNeighbor() != null) {
+      neighbors.add(cell.sNeighbor());
+    }
+    if (cell.swNeighbor() != null) {
+      neighbors.add(cell.swNeighbor());
+    }
+    if (cell.wNeighbor() != null) {
+      neighbors.add(cell.wNeighbor());
+    }
+    if (cell.nwNeighbor() != null) {
+      neighbors.add(cell.nwNeighbor());
+    }
+    return neighbors;
   }
 }

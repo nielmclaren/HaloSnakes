@@ -29,7 +29,7 @@ void setup() {
 }
 
 void draw() {
-  if (frameCount % 20 == 0) {
+  if (frameCount % 5 == 0) {
     pandemic.step();
   }
 
