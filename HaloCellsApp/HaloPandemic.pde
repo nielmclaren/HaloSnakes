@@ -1,7 +1,8 @@
 
 public class HaloPandemic {
-  private final float P_DEATH = 0.5;
-  private final float P_INFECT = 0.25;
+  private final float P_DEATH = 0.08;
+  private final float P_INFECT = 0.02;
+  private final int MIN_INFECTIONS = 10;
 
   private HaloGrid grid;
   private ArrayList<HaloInfection> infections;
@@ -15,9 +16,12 @@ public class HaloPandemic {
   private void setupInfections(int numInfections) {
     infections = new ArrayList<HaloInfection>();
     for (int i = 0; i < numInfections; i++) {
-      HaloCell cell = grid.get(
-          floor(random(grid.width())),
-          floor(random(grid.height())));
+      HaloCell cell = null;
+      while (cell == null || hasInfection(cell)) {
+        cell = grid.get(
+            floor(random(grid.width())),
+            floor(random(grid.height())));
+      }
 
       infections.add(new HaloInfection(cell));
     }
@@ -30,11 +34,12 @@ public class HaloPandemic {
   public HaloPandemic step() {
     stepDeaths();
     stepInfections();
+    spreadInfections();
     return this;
   }
 
   private void stepDeaths() {
-    if (infections.size() <= 1) {
+    if (infections.size() <= MIN_INFECTIONS) {
       return;
     }
 
@@ -43,7 +48,7 @@ public class HaloPandemic {
         infections.remove(i);
         i--;
 
-        if (infections.size() <= 1) {
+        if (infections.size() <= MIN_INFECTIONS) {
           return;
         }
       }
@@ -51,6 +56,12 @@ public class HaloPandemic {
   }
 
   private void stepInfections() {
+    for (int i = 0; i < infections.size(); i++) {
+      infections.get(i).step();
+    }
+  }
+
+  private void spreadInfections() {
     ArrayList<HaloInfection> nextInfections = (ArrayList<HaloInfection>)infections.clone();
     for (int i = 0; i < infections.size(); i++) {
       HaloInfection infection = infections.get(i);

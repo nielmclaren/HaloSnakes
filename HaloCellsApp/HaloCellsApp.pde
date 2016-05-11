@@ -20,7 +20,7 @@ void setup() {
   grid = new HaloGrid(12, 6);
   gridDrawer = new HaloGridDrawer(grid, config);
 
-  pandemic = new HaloPandemic(grid, 3);
+  pandemic = new HaloPandemic(grid, 12);
   pandemicDrawer = new HaloPandemicDrawer(pandemic, config);
 
   halo = new Halo(
