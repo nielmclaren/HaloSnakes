@@ -43,7 +43,7 @@ public class SnakePitDrawer {
       stroke(0, 0, 255, t * 100);
     }
 
-    strokeWeight(4);
+    strokeWeight(2);
     noFill();
 
     line(x0, y0, x1, y1);

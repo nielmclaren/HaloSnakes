@@ -11,9 +11,9 @@ public class SnakePit {
   private ArrayList<Snake> createSnakes(int count) {
     ArrayList<Snake> result = new ArrayList<Snake>();
     for (int i = 0; i < count; i++) {
-      result.add(new Snake(
+      result.add(new Snake(grid.get(
           floor(random(grid.width())),
-          floor(random(grid.height()))));
+          floor(random(grid.height())))));
     }
     return result;
   }

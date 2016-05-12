@@ -1,36 +1,26 @@
 
 public class Snake {
-  private int x;
-  private int y;
+  private HaloCell cell;
   private boolean isClockwise;
   private float angle;
   private float length;
   private float speed;
 
-  Snake(int xArg, int yArg) {
-    x = xArg;
-    y = yArg;
+  Snake(HaloCell cellArg) {
+    cell = cellArg;
     isClockwise = random(1) < 0.5;
     angle = random(2 * PI);
-    length = PI/4;
+    length = 2 * PI;
 
     speed = PI / 32;
   }
 
   public int x() {
-    return x;
-  }
-  public Snake x(int v) {
-    x = v;
-    return this;
+    return cell.x();
   }
 
   public int y() {
-    return y;
-  }
-  public Snake y(int v) {
-    y = v;
-    return this;
+    return cell.y();
   }
 
   public boolean isClockwise() {
@@ -58,19 +48,65 @@ public class Snake {
   }
 
   public Snake step() {
-    if (isClockwise) {
-      angle += speed;
-      while (angle > 2 * PI) {
-        angle -= 2 * PI;
-      }
-    }
-    else {
-      angle -= speed;
-      while (angle < 0) {
-        angle += 2 * PI;
-      }
+    float prevAngle = angle;
+    angle = stepAngle(angle);
+
+    if (!isSameQuadrant(prevAngle, angle) && random(1) < 0.5) {
+      attemptJump();
     }
 
     return this;
+  }
+
+  private void attemptJump() {
+    HaloCell jumpNeighbor = getJumpNeighbor();
+    if (jumpNeighbor != null) {
+      cell = jumpNeighbor;
+    }
+  }
+
+  private HaloCell getJumpNeighbor() {
+    int quadrant = getQuadrant(incrementAngle(angle, PI / 4));
+    switch (quadrant) {
+      case 0:
+        return cell.eNeighbor();
+      case 1:
+        return cell.sNeighbor();
+      case 2:
+        return cell.wNeighbor();
+      case 3:
+        return cell.nNeighbor();
+      default:
+        return null;
+    }
+  }
+
+  private float stepAngle(float a) {
+    if (isClockwise) {
+      a = incrementAngle(a, speed);
+    }
+    else {
+      a = incrementAngle(a, -speed);
+    }
+    return a;
+  }
+
+  private float incrementAngle(float a, float delta) {
+    a += delta;
+    while (a >= 2 * PI) {
+      a -= 2 * PI;
+    }
+    while (a < 0) {
+      a += 2 * PI;
+    }
+    return a;
+  }
+
+  private boolean isSameQuadrant(float a, float b) {
+    return getQuadrant(a) == getQuadrant(b);
+  }
+
+  private int getQuadrant(float a) {
+    return floor(a * 4 / (2 * PI));
   }
 }
