@@ -1,2 +1,2 @@
-# HaloCells
-Treating halos as infectable cells on Tangible Interaction's Halo wall.
+# HaloSnakes
+Drawing snakes on Tangible Interaction’s Halo wall.
