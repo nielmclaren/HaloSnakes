@@ -4,12 +4,15 @@ public class Snake {
   private int y;
   private boolean isClockwise;
   private float angle;
+  private float speed;
 
   Snake(int xArg, int yArg) {
     x = xArg;
     y = yArg;
     isClockwise = random(1) < 0.5;
     angle = random(2 * PI);
+
+    speed = PI / 32;
   }
 
   public int x() {
@@ -45,6 +48,19 @@ public class Snake {
   }
 
   public Snake step() {
+    if (isClockwise) {
+      angle += speed;
+      while (angle > 2 * PI) {
+        angle -= 2 * PI;
+      }
+    }
+    else {
+      angle -= speed;
+      while (angle < 0) {
+        angle += 2 * PI;
+      }
+    }
+
     return this;
   }
 }

@@ -33,6 +33,10 @@ void setup() {
 }
 
 void draw() {
+  if (frameCount % 5 == 0) {
+    snakePit.step();
+  }
+
   background(0);
   gridDrawer.draw(this.g);
   snakePitDrawer.draw(this.g);
