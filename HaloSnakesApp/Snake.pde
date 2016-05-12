@@ -1,10 +1,16 @@
 
+import java.util.LinkedList;
+
 public class Snake {
+  private final float P_JUMP = 0.75;
+
   private HaloCell cell;
   private boolean isClockwise;
   private float angle;
   private float length;
   private float speed;
+  private LinkedList<SnakeSegment> segments;
+  private float segmentStartAngle;
 
   Snake(HaloCell cellArg) {
     cell = cellArg;
@@ -12,7 +18,9 @@ public class Snake {
     angle = random(2 * PI);
     length = 2 * PI;
 
-    speed = PI / 32;
+    speed = PI / 16;
+    segments = new LinkedList<SnakeSegment>();
+    segmentStartAngle = angle;
   }
 
   public int x() {
@@ -21,6 +29,10 @@ public class Snake {
 
   public int y() {
     return cell.y();
+  }
+
+  public HaloCell cell() {
+    return cell;
   }
 
   public boolean isClockwise() {
@@ -47,26 +59,69 @@ public class Snake {
     return this;
   }
 
+  public SnakeSegment segment(int jumpsAgo) {
+    if (jumpsAgo <= 0 || segments.size() <= 0) {
+      return new SnakeSegment(this, segmentStartAngle);
+    }
+    return segments.get(min(jumpsAgo - 1, segments.size() - 1));
+  }
+
+  public int segmentCount() {
+    return segments.size() + 1;
+  }
+
   public Snake step() {
     float prevAngle = angle;
     angle = stepAngle(angle);
 
-    if (!isSameQuadrant(prevAngle, angle) && random(1) < 0.5) {
-      attemptJump();
+    if (!isSameQuadrant(prevAngle, angle)) {
+      potentialJump();
     }
 
     return this;
   }
 
+  private void potentialJump() {
+    attemptJump();
+  }
+
   private void attemptJump() {
-    HaloCell jumpNeighbor = getJumpNeighbor();
-    if (jumpNeighbor != null) {
-      cell = jumpNeighbor;
+    if (random(1) < P_JUMP) {
+      HaloCell jumpNeighbor = getJumpNeighbor(angle);
+      if (jumpNeighbor == null) {
+        recordSegment(new SnakeSegment(this, angle));
+      }
+      else {
+        recordSegment(new SnakeSegment(this, segmentStartAngle));
+        cell = jumpNeighbor;
+        isClockwise = !isClockwise;
+
+        if (isHorizontalJump(angle)) {
+          angle = clampAngle(PI - angle);
+        }
+        else {
+          angle = clampAngle(-angle);
+        }
+        segmentStartAngle = angle;
+      }
     }
   }
 
-  private HaloCell getJumpNeighbor() {
-    int quadrant = getQuadrant(incrementAngle(angle, PI / 4));
+  private void recordSegment(SnakeSegment v) {
+    segments.addFirst(v);
+    int segmentCount = floor(length / (PI / 2));
+    while (segments.size() > segmentCount) {
+      segments.removeLast();
+    }
+  }
+
+  private boolean isHorizontalJump(float a) {
+    int quadrant = getQuadrant(clampAngle(a + PI / 4));
+    return quadrant == 0 || quadrant == 2;
+  }
+
+  private HaloCell getJumpNeighbor(float a) {
+    int quadrant = getQuadrant(clampAngle(a + PI / 4));
     switch (quadrant) {
       case 0:
         return cell.eNeighbor();
@@ -83,16 +138,15 @@ public class Snake {
 
   private float stepAngle(float a) {
     if (isClockwise) {
-      a = incrementAngle(a, speed);
+      a = clampAngle(a + speed);
     }
     else {
-      a = incrementAngle(a, -speed);
+      a = clampAngle(a - speed);
     }
     return a;
   }
 
-  private float incrementAngle(float a, float delta) {
-    a += delta;
+  private float clampAngle(float a) {
     while (a >= 2 * PI) {
       a -= 2 * PI;
     }
