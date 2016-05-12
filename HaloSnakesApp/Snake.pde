@@ -4,6 +4,7 @@ public class Snake {
   private int y;
   private boolean isClockwise;
   private float angle;
+  private float length;
   private float speed;
 
   Snake(int xArg, int yArg) {
@@ -11,6 +12,7 @@ public class Snake {
     y = yArg;
     isClockwise = random(1) < 0.5;
     angle = random(2 * PI);
+    length = PI/4;
 
     speed = PI / 32;
   }
@@ -44,6 +46,14 @@ public class Snake {
   }
   public Snake angle(float v) {
     angle = v;
+    return this;
+  }
+
+  public float length() {
+    return length;
+  }
+  public Snake length(float v) {
+    length = v;
     return this;
   }
 

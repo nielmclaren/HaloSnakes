@@ -10,7 +10,6 @@ public class SnakePitHaloDrawer {
 
   public void draw() {
     halo.controlAll(0x000000, 0.5);
-
     drawSnakes(snakePit.snakes());
   }
 
