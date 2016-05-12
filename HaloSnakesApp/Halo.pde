@@ -138,4 +138,24 @@ public class Halo {
       message.add(aDuration);
       osc.send(message, address);
   }
+
+  public void controlAll(color aColor, float aDuration)
+  {
+      int red   = (aColor >> 16) & 0xFF;
+      int green = (aColor >> 8)  & 0xFF;
+      int blue  =  aColor        & 0xFF;
+
+      for (int x = 0; x < 12; x++) {
+          for (int y = 0; y < 6; y++) {
+              OscMessage message = new OscMessage("/halo");
+              message.add(x);
+              message.add(y);
+              message.add((float)red / 255.);
+              message.add((float)green / 255.);
+              message.add((float)blue / 255.);
+              message.add(aDuration);
+              osc.send(message, address);
+          }
+      }
+  }
 }
