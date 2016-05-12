@@ -27,6 +27,10 @@ public class HaloPandemic {
     }
   }
 
+  public HaloGrid grid() {
+    return grid;
+  }
+
   public ArrayList<HaloInfection> infections() {
     return infections;
   }
@@ -84,17 +88,25 @@ public class HaloPandemic {
     return infectedNeighbors;
   }
 
-  private boolean hasInfection(HaloCell cell) {
+  public boolean hasInfection(HaloCell cell) {
     return hasInfection(cell.x(), cell.y());
   }
 
-  private boolean hasInfection(int x, int y) {
+  public boolean hasInfection(int x, int y) {
+    return getInfection(x, y) != null;
+  }
+
+  public HaloInfection getInfection(HaloCell cell) {
+    return getInfection(cell.x(), cell.y());
+  }
+
+  public HaloInfection getInfection(int x, int y) {
     for (int i = 0; i < infections.size(); i++) {
       HaloInfection infection = infections.get(i);
       if (infection.cell().x() == x && infection.cell().y() == y) {
-        return true;
+        return infection;
       }
     }
-    return false;
+    return null;
   }
 }

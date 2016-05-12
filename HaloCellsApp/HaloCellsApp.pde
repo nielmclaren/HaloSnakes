@@ -10,6 +10,7 @@ HaloGridDrawer gridDrawer;
 HaloPandemic pandemic;
 HaloPandemicDrawer pandemicDrawer;
 Halo halo;
+HaloPandemicHaloDrawer pandemicHaloDrawer;
 
 void setup() {
   size(640, 480);
@@ -26,6 +27,9 @@ void setup() {
   halo = new Halo(
       new OscP5(this, 12000),
       new NetAddress("127.0.0.1", 1314));
+
+  pandemicHaloDrawer = new HaloPandemicHaloDrawer(pandemic, halo)
+    .palette(new Palette().load("palette.png"));
 }
 
 void draw() {
@@ -36,4 +40,5 @@ void draw() {
   background(0);
   gridDrawer.draw(this.g);
   pandemicDrawer.draw(this.g);
+  pandemicHaloDrawer.draw();
 }
