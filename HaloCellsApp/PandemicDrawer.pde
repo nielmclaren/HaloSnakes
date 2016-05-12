@@ -1,23 +1,23 @@
 
-public class HaloPandemicDrawer {
-  private HaloPandemic pandemic;
+public class PandemicDrawer {
+  private Pandemic pandemic;
   private DrawConfig config;
 
-  HaloPandemicDrawer(HaloPandemic pandemicArg, DrawConfig configArg) {
+  PandemicDrawer(Pandemic pandemicArg, DrawConfig configArg) {
     pandemic = pandemicArg;
     config = configArg;
   }
 
   public void draw(PGraphics g) {
-    ArrayList<HaloInfection> infections = pandemic.infections();
+    ArrayList<Infection> infections = pandemic.infections();
     for (int i = 0; i < infections.size(); i++) {
-      HaloInfection infection = infections.get(i);
+      Infection infection = infections.get(i);
       HaloCell cell = infection.cell();
-      drawHalo(g, infection.age(), cell.x(), cell.y());
+      draw(g, infection.age(), cell.x(), cell.y());
     }
   }
 
-  private void drawHalo(PGraphics g, int age, int x, int y) {
+  private void draw(PGraphics g, int age, int x, int y) {
     int cellSize = config.cellSize();
     float radius = map(age, 0, 64, cellSize * 0.4, cellSize * 0.8);
     stroke(128);

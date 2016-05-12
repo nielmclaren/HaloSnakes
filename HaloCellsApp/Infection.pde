@@ -1,9 +1,9 @@
 
-public class HaloInfection {
+public class Infection {
   private HaloCell cell;
   private int age;
 
-  HaloInfection(HaloCell cellArg) {
+  Infection(HaloCell cellArg) {
     cell = cellArg;
     age = 0;
   }
@@ -12,7 +12,7 @@ public class HaloInfection {
     return cell;
   }
 
-  public HaloInfection step() {
+  public Infection step() {
     age++;
     return this;
   }

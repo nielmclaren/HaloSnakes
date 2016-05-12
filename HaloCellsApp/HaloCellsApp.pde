@@ -7,10 +7,10 @@ NetAddress myRemoteLocation;
 
 HaloGrid grid;
 HaloGridDrawer gridDrawer;
-HaloPandemic pandemic;
-HaloPandemicDrawer pandemicDrawer;
+Pandemic pandemic;
+PandemicDrawer pandemicDrawer;
 Halo halo;
-HaloPandemicHaloDrawer pandemicHaloDrawer;
+PandemicHaloDrawer pandemicHaloDrawer;
 
 void setup() {
   size(640, 480);
@@ -21,14 +21,14 @@ void setup() {
   grid = new HaloGrid(12, 6);
   gridDrawer = new HaloGridDrawer(grid, config);
 
-  pandemic = new HaloPandemic(grid, 12);
-  pandemicDrawer = new HaloPandemicDrawer(pandemic, config);
+  pandemic = new Pandemic(grid, 12);
+  pandemicDrawer = new PandemicDrawer(pandemic, config);
 
   halo = new Halo(
       new OscP5(this, 12000),
       new NetAddress("127.0.0.1", 1314));
 
-  pandemicHaloDrawer = new HaloPandemicHaloDrawer(pandemic, halo)
+  pandemicHaloDrawer = new PandemicHaloDrawer(pandemic, halo)
     .palette(new Palette().load("palette.png"));
 }
 

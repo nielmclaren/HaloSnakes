@@ -1,17 +1,17 @@
 
-public class HaloPandemicHaloDrawer {
-  private HaloPandemic pandemic;
+public class PandemicHaloDrawer {
+  private Pandemic pandemic;
   private Halo halo;
   private Palette palette;
 
-  HaloPandemicHaloDrawer(HaloPandemic pandemicArg, Halo haloArg) {
+  PandemicHaloDrawer(Pandemic pandemicArg, Halo haloArg) {
     pandemic = pandemicArg;
     halo = haloArg;
 
     palette = new Palette();
   }
 
-  public HaloPandemicHaloDrawer palette(Palette p) {
+  public PandemicHaloDrawer palette(Palette p) {
     palette = p;
     return this;
   }
@@ -30,7 +30,7 @@ public class HaloPandemicHaloDrawer {
   }
 
   private void drawCell(int x, int y) {
-    HaloInfection infection = pandemic.getInfection(x, y);
+    Infection infection = pandemic.getInfection(x, y);
     if (infection == null) {
       drawHealthyHalo(x, y);
     }

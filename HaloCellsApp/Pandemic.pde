@@ -1,20 +1,20 @@
 
-public class HaloPandemic {
+public class Pandemic {
   private final float P_DEATH = 0.08;
   private final float P_INFECT = 0.02;
   private final int MIN_INFECTIONS = 10;
 
   private HaloGrid grid;
-  private ArrayList<HaloInfection> infections;
+  private ArrayList<Infection> infections;
 
-  HaloPandemic(HaloGrid gridArg, int numInfections) {
+  Pandemic(HaloGrid gridArg, int numInfections) {
     grid = gridArg;
 
     setupInfections(numInfections);
   }
 
   private void setupInfections(int numInfections) {
-    infections = new ArrayList<HaloInfection>();
+    infections = new ArrayList<Infection>();
     for (int i = 0; i < numInfections; i++) {
       HaloCell cell = null;
       while (cell == null || hasInfection(cell)) {
@@ -23,7 +23,7 @@ public class HaloPandemic {
             floor(random(grid.height())));
       }
 
-      infections.add(new HaloInfection(cell));
+      infections.add(new Infection(cell));
     }
   }
 
@@ -31,11 +31,11 @@ public class HaloPandemic {
     return grid;
   }
 
-  public ArrayList<HaloInfection> infections() {
+  public ArrayList<Infection> infections() {
     return infections;
   }
 
-  public HaloPandemic step() {
+  public Pandemic step() {
     stepDeaths();
     stepInfections();
     spreadInfections();
@@ -66,22 +66,22 @@ public class HaloPandemic {
   }
 
   private void spreadInfections() {
-    ArrayList<HaloInfection> nextInfections = (ArrayList<HaloInfection>)infections.clone();
+    ArrayList<Infection> nextInfections = (ArrayList<Infection>)infections.clone();
     for (int i = 0; i < infections.size(); i++) {
-      HaloInfection infection = infections.get(i);
+      Infection infection = infections.get(i);
       nextInfections.addAll(infectNeighbors(infection.cell()));
     }
     infections = nextInfections;
   }
 
-  private ArrayList<HaloInfection> infectNeighbors(HaloCell cell) {
-    ArrayList<HaloInfection> infectedNeighbors = new ArrayList<HaloInfection>();
+  private ArrayList<Infection> infectNeighbors(HaloCell cell) {
+    ArrayList<Infection> infectedNeighbors = new ArrayList<Infection>();
 
     ArrayList<HaloCell> neighbors = cell.getNeighbors();
     for (int i = 0; i < neighbors.size(); i++) {
       HaloCell neighborCell = neighbors.get(i);
       if (!hasInfection(neighborCell) && random(1) < P_INFECT) {
-        infectedNeighbors.add(new HaloInfection(neighborCell));
+        infectedNeighbors.add(new Infection(neighborCell));
       }
     }
 
@@ -96,13 +96,13 @@ public class HaloPandemic {
     return getInfection(x, y) != null;
   }
 
-  public HaloInfection getInfection(HaloCell cell) {
+  public Infection getInfection(HaloCell cell) {
     return getInfection(cell.x(), cell.y());
   }
 
-  public HaloInfection getInfection(int x, int y) {
+  public Infection getInfection(int x, int y) {
     for (int i = 0; i < infections.size(); i++) {
-      HaloInfection infection = infections.get(i);
+      Infection infection = infections.get(i);
       if (infection.cell().x() == x && infection.cell().y() == y) {
         return infection;
       }
