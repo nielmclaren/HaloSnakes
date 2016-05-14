@@ -19,7 +19,7 @@ boolean isPaused;
 void setup() {
   size(640, 480);
 
-  isPaused = true;
+  isPaused = false;
 
   config = new DrawConfig()
     .cellSize(40);
@@ -27,7 +27,7 @@ void setup() {
   grid = new HaloGrid(12, 6);
   gridDrawer = new HaloGridDrawer(grid, config);
 
-  snakeCount = 1;
+  snakeCount = 4;
   snakePit = new SnakePit(grid, snakeCount);
   snakePitDrawer = new SnakePitDrawer(snakePit, config);
 
