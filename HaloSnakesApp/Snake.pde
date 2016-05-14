@@ -8,6 +8,7 @@ public class Snake {
   private boolean isClockwise;
   private float angle;
   private float length;
+  private float maxLength;
   private float speed;
   private LinkedList<SnakeSegment> segments;
   private float segmentStartAngle;
@@ -16,7 +17,8 @@ public class Snake {
     cell = cellArg;
     isClockwise = random(1) < 0.5;
     angle = random(2 * PI);
-    length = 2 * PI;
+    length = 0;
+    maxLength = 2 * PI;
 
     speed = PI / 16;
     segments = new LinkedList<SnakeSegment>();
@@ -59,6 +61,14 @@ public class Snake {
     return this;
   }
 
+  public float maxLength() {
+    return maxLength;
+  }
+  public Snake maxLength(float v) {
+    maxLength = v;
+    return this;
+  }
+
   public SnakeSegment segment(int jumpsAgo) {
     if (jumpsAgo <= 0 || segments.size() <= 0) {
       return new SnakeSegment(this, segmentStartAngle);
@@ -73,6 +83,7 @@ public class Snake {
   public Snake step() {
     float prevAngle = angle;
     angle = stepAngle(angle);
+    length = stepLength(length);
 
     if (!isSameQuadrant(prevAngle, angle)) {
       potentialJump();
@@ -144,6 +155,10 @@ public class Snake {
       a = clampAngle(a - speed);
     }
     return a;
+  }
+
+  private float stepLength(float v) {
+    return min(maxLength, v + speed);
   }
 
   private float clampAngle(float a) {
