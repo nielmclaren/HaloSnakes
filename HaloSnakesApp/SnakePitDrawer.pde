@@ -86,7 +86,7 @@ public class SnakePitDrawer {
     g.noFill();
 
     float length = snake.length();
-    float stepSize = PI / 8;
+    float stepSize = PI / 16;
     int stepCount = floor(length / stepSize);
     for (int i = 0; i < stepCount; i++) {
       float currLength = i * stepSize;

@@ -33,7 +33,7 @@ void setup() {
 
   halo = new Halo(
       new OscP5(this, 12000),
-      new NetAddress("192.168.3.50", 1314));
+      new NetAddress("127.0.0.1", 1314));
 
   snakePitHaloDrawer = new SnakePitHaloDrawer(snakePit, halo);
 
@@ -41,8 +41,8 @@ void setup() {
 }
 
 void draw() {
-  if (!isPaused) {
-    snakePit.step();
+  if (!isPaused && frameCount % 5 == 0) {
+    step(1);
     redraw();
   }
 }

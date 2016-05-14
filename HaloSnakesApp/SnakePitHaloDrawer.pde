@@ -9,7 +9,7 @@ public class SnakePitHaloDrawer {
   }
 
   public void draw() {
-    halo.controlAll(0x000000, 0.5);
+    halo.controlAll(0x000000, 1.0);
     drawSnakes(snakePit.snakes());
   }
 
@@ -21,8 +21,20 @@ public class SnakePitHaloDrawer {
   }
 
   private void drawSnake(Snake snake) {
-    halo.controlLED(snake.x(), snake.y(),
-        floor(map(snake.angle(), 0, 2 * PI, 0, 30)),
+    halo.controlLED(
+        snake.x(), snake.y(),
+        transformAngle(snake.angle()),
         0xffffff, 0);
+  }
+
+  private int transformAngle(float v) {
+    v += 3 * PI/2;
+    while (v < 0) {
+      v += 2 * PI;
+    }
+    while (v > 2 * PI) {
+      v -= 2 * PI;
+    }
+    return floor(map(v, 0, 2 * PI, 0, 30));
   }
 }
