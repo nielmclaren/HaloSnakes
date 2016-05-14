@@ -51,8 +51,15 @@ public class SnakePitDrawer {
   }
 
   private void drawSnakeSegments(PGraphics g, Snake snake) {
+    if (isDebug) {
+      println("Draw snake segments");
+    }
+
     for (int i = 0; i < snake.segmentCount(); i++) {
       SnakeSegment segment = snake.segment(i);
+      if (isDebug) {
+        println(i + ":\t" + segment.x() + ", " + segment.y() + "\t" + deg(segment.startAngle()) + " to " + deg(segment.endAngle()) + " " + (segment.isClockwise() ? "CW" : "CCW"));
+      }
       drawSnakeSegment(g, segment);
     }
   }
@@ -74,10 +81,6 @@ public class SnakePitDrawer {
   }
 
   private void drawSnakeSteps(PGraphics g, Snake snake) {
-    if (isDebug) {
-      println("Draw snake steps");
-    }
-
     g.stroke(255, 0, 0);
     g.strokeWeight(2);
     g.noFill();
@@ -88,9 +91,6 @@ public class SnakePitDrawer {
     for (int i = 0; i < stepCount; i++) {
       float currLength = i * stepSize;
       SnakeSegment segment = getSegment(snake, currLength);
-      if (isDebug) {
-        println(i + ":\t" + deg(segment.startAngle()) + " to " + deg(segment.endAngle()) + " " + (segment.isClockwise() ? "CW" : "CCW"));
-      }
       float remainder = getRemainderLength(snake, currLength);
       float angle = segment.interpolatedAngle(1 - remainder / segment.angleDifference());
       drawAngle(g, segment.x(), segment.y(), angle, 1);

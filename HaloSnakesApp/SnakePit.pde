@@ -2,10 +2,29 @@
 public class SnakePit {
   private HaloGrid grid;
   private ArrayList<Snake> snakes;
+  private int forceJumpMode;
 
   SnakePit(HaloGrid gridArg, int snakeCount) {
     grid = gridArg;
     snakes = createSnakes(snakeCount);
+
+    forceJumpMode = ForceJumpMode.NONE;
+  }
+
+  public int forceJumpMode() {
+    return forceJumpMode;
+  }
+  public SnakePit forceJumpMode(int v) {
+    forceJumpMode = v;
+    forceJumpChanged();
+    return this;
+  }
+
+  private void forceJumpChanged() {
+    for (int i = 0; i < snakes.size(); i++) {
+      Snake snake = snakes.get(i);
+      snake.forceJumpMode(forceJumpMode);
+    }
   }
 
   private ArrayList<Snake> createSnakes(int count) {
@@ -13,7 +32,8 @@ public class SnakePit {
     for (int i = 0; i < count; i++) {
       result.add(new Snake(grid.get(
           floor(random(grid.width())),
-          floor(random(grid.height())))));
+          floor(random(grid.height()))))
+        .forceJumpMode(forceJumpMode));
     }
     return result;
   }

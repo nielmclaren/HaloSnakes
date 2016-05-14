@@ -12,6 +12,7 @@ public class Snake {
   private float speed;
   private LinkedList<SnakeSegment> segments;
   private float segmentStartAngle;
+  private int forceJumpMode;
 
   Snake(HaloCell cellArg) {
     cell = cellArg;
@@ -23,6 +24,8 @@ public class Snake {
     speed = PI / 16;
     segments = new LinkedList<SnakeSegment>();
     segmentStartAngle = angle;
+
+    forceJumpMode = ForceJumpMode.NONE;
   }
 
   public int x() {
@@ -80,6 +83,14 @@ public class Snake {
     return segments.size() + 1;
   }
 
+  public int forceJumpMode() {
+    return forceJumpMode;
+  }
+  public Snake forceJumpMode(int v) {
+    forceJumpMode = v;
+    return this;
+  }
+
   public Snake step() {
     float prevAngle = angle;
     angle = stepAngle(angle);
@@ -97,7 +108,9 @@ public class Snake {
   }
 
   private void attemptJump() {
-    if (random(1) < P_JUMP) {
+    if (forceJumpMode == ForceJumpMode.JUMP
+        || forceJumpMode == ForceJumpMode.NONE
+        && random(1) < P_JUMP) {
       HaloCell jumpNeighbor = getJumpNeighbor(angle);
       if (jumpNeighbor == null) {
         recordSegment(new SnakeSegment(this, angle));

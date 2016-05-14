@@ -102,5 +102,17 @@ void keyReleased() {
       reset();
       redraw();
       break;
+    case 'j':
+      snakePit.forceJumpMode(ForceJumpMode.JUMP);
+      println("Will force jump.");
+      break;
+    case 'n':
+      snakePit.forceJumpMode(ForceJumpMode.NO_JUMP);
+      println("Will force NO jump.");
+      break;
+    case 'u':
+      snakePit.forceJumpMode(ForceJumpMode.NONE);
+      println("No force.");
+      break;
   }
 }
