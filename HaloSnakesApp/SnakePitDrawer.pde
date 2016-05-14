@@ -8,7 +8,7 @@ public class SnakePitDrawer {
     snakePit = snakePitArg;
     config = configArg;
 
-    isDebug = true;
+    isDebug = false;
   }
 
   public SnakePitDrawer isDebug(boolean v) {

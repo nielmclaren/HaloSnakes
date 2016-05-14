@@ -129,6 +129,10 @@ public class Snake {
         segmentStartAngle = angle;
       }
     }
+    else {
+      recordSegment(new SnakeSegment(this, segmentStartAngle));
+      segmentStartAngle = angle;
+    }
   }
 
   private void recordSegment(SnakeSegment v) {
