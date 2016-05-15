@@ -13,6 +13,7 @@ public class Snake {
   private LinkedList<SnakeSegment> segments;
   private float segmentStartAngle;
   private int forceJumpMode;
+  private color snakeColor;
 
   Snake(HaloCell cellArg) {
     cell = cellArg;
@@ -21,11 +22,17 @@ public class Snake {
     length = 0;
     maxLength = 2 * PI;
 
-    speed = PI / 16;
+    speed = PI / 8;
     segments = new LinkedList<SnakeSegment>();
     segmentStartAngle = angle;
 
     forceJumpMode = ForceJumpMode.NONE;
+    snakeColor = getSnakeColor();
+  }
+
+  private color getSnakeColor() {
+    color[] pool = new color[] {0x999900, 0x990099, 0x009999};
+    return pool[floor(random(pool.length))];
   }
 
   public int x() {
@@ -34,6 +41,10 @@ public class Snake {
 
   public int y() {
     return cell.y();
+  }
+
+  public color snakeColor() {
+    return snakeColor;
   }
 
   public HaloCell cell() {

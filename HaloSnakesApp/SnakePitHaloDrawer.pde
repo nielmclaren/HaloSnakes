@@ -21,7 +21,7 @@ public class SnakePitHaloDrawer {
   }
 
   private void drawSnake(Snake snake) {
-    halo.controlLED(
+    halo.controlLed(
         snake.x(), snake.y(),
         transformAngle(snake.angle()),
         0xffffff, 0);

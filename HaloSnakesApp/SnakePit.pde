@@ -11,6 +11,10 @@ public class SnakePit {
     forceJumpMode = ForceJumpMode.NONE;
   }
 
+  public HaloGrid grid() {
+    return grid;
+  }
+
   public int forceJumpMode() {
     return forceJumpMode;
   }

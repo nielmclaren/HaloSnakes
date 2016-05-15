@@ -44,11 +44,11 @@ public class Halo {
    *  @param
    *  aX : x postion of the halo on the grid, from 0 to 11.
    *  aY : y postion of the halo on the grid, from 0 to 5.
-   *  aIndexLED : index of the LED on the halo, from 0 to 30.
+   *  aIndexLed : index of the LED on the halo, from 0 to 30.
    *  aColor : Color target, rgb format, values from 0. to 1.
    *  aDuration : Duration of the fading to this color in second.
    */
-  public void controlLED(int aX, int aY, int aIndexLED, color aColor, float aDuration)
+  public void controlLed(int aX, int aY, int aIndexLed, color aColor, float aDuration)
   {
       int red   = (aColor >> 16) & 0xFF;
       int green = (aColor >> 8)  & 0xFF;
@@ -57,7 +57,7 @@ public class Halo {
       OscMessage message = new OscMessage("/led");
       message.add(aX);
       message.add(aY);
-      message.add(aIndexLED);
+      message.add(aIndexLed);
       message.add((float)red / 255.);
       message.add((float)green / 255.);
       message.add((float)blue / 255.);
@@ -93,7 +93,7 @@ public class Halo {
    *
    *  @param
    *  aColumn : index of the column, 0 is left, from 0 to 11.
-   *  aIndexLED : index of the LED on the halo, from 0 to 30.
+   *  aIndexLed : index of the LED on the halo, from 0 to 30.
    *  aColor : Color target, rgb format, values from 0. to 1.
    *  aDuration : Duration of the fading to this color in second.
    */

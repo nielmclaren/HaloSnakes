@@ -2,12 +2,14 @@
 public class HaloGrid {
   private int width;
   private int height;
+  private int depth;
 
   private HaloCell[][] grid;
 
-  HaloGrid(int w, int h) {
+  HaloGrid(int w, int h, int d) {
     width = w;
     height = h;
+    depth = d;
     grid = new HaloCell[width][height];
 
     createHaloCells();
@@ -24,6 +26,10 @@ public class HaloGrid {
 
   public int height() {
     return height;
+  }
+
+  public int depth() {
+    return depth;
   }
 
   private void createHaloCells() {

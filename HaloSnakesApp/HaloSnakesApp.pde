@@ -12,7 +12,7 @@ HaloGridDrawer gridDrawer;
 SnakePit snakePit;
 SnakePitDrawer snakePitDrawer;
 Halo halo;
-SnakePitHaloDrawer snakePitHaloDrawer;
+SnakePitHaloBufferDrawer snakePitHaloBufferDrawer;
 
 boolean isPaused;
 
@@ -24,10 +24,10 @@ void setup() {
   config = new DrawConfig()
     .cellSize(40);
 
-  grid = new HaloGrid(12, 6);
+  grid = new HaloGrid(12, 6, 30);
   gridDrawer = new HaloGridDrawer(grid, config);
 
-  snakeCount = 4;
+  snakeCount = 32;
   snakePit = new SnakePit(grid, snakeCount);
   snakePitDrawer = new SnakePitDrawer(snakePit, config);
 
@@ -35,7 +35,7 @@ void setup() {
       new OscP5(this, 12000),
       new NetAddress("127.0.0.1", 1314));
 
-  snakePitHaloDrawer = new SnakePitHaloDrawer(snakePit, halo);
+  snakePitHaloBufferDrawer = new SnakePitHaloBufferDrawer(snakePit, halo);
 
   redraw();
 }
@@ -50,14 +50,14 @@ void draw() {
 void reset() {
   snakePit = new SnakePit(grid, snakeCount);
   snakePitDrawer = new SnakePitDrawer(snakePit, config);
-  snakePitHaloDrawer = new SnakePitHaloDrawer(snakePit, halo);
+  snakePitHaloBufferDrawer = new SnakePitHaloBufferDrawer(snakePit, halo);
 }
 
 void redraw() {
   background(0);
   gridDrawer.draw(this.g);
   snakePitDrawer.draw(this.g);
-  snakePitHaloDrawer.draw();
+  snakePitHaloBufferDrawer.draw();
 }
 
 void step(int n) {
@@ -68,9 +68,6 @@ void step(int n) {
 
 void keyReleased() {
   switch (key) {
-    case 'd':
-      snakePitDrawer.isDebug(!snakePitDrawer.isDebug());
-      break;
     case 'p':
       isPaused = !isPaused;
       break;
